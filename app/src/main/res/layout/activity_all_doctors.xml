@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EBF9FF"
+    tools:context=".AllDoctors">
+
+    <TextView
+        android:id="@+id/alldrtxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:fontFamily="@font/kinetica_bold"
+        android:drawableStart="@drawable/baseline_arrow_back_ios_new_24"
+        android:text="      All Doctors"
+        android:textColor="#195A80"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="4sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/alldrtxt">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/drImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/doctor_profile_pic"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:layout_marginHorizontal="15dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/drImage">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dr. Wangy Wigham"
+                    android:paddingHorizontal="10dp"
+                    android:paddingBottom="10dp"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/kinetica_bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:paddingHorizontal="10dp"
+                    android:textStyle="bold"
+                    android:fontFamily="@font/kinetika_regular"
+                    android:text="General | Shalby Hospitals"
+                    android:textColor="#8F9498" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="14dp"
+                    android:paddingHorizontal="10dp"
+                    android:textStyle="bold"
+                    android:padding="10dp"
+                    android:fontFamily="@font/kinetika_regular"
+                    android:text="⭐ 4.8 (5k reviews)"
+                    android:textColor="#8F9498" />
+
+                <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:elevation="8sp"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/white"
+                    android:text="Book"
+                    android:fontFamily="@font/kinetika_semibold"
+                    android:backgroundTint="#10B6B6" />
+
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

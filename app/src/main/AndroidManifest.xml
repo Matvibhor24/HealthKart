@@ -13,6 +13,12 @@
         android:theme="@style/Theme.MediMate"
         tools:targetApi="31">
         <activity
+            android:name=".BookAppointmentScreen"
+            android:exported="false" />
+        <activity
+            android:name=".AllDoctors"
+            android:exported="false" />
+        <activity
             android:name=".HomeScreen"
             android:exported="false" />
         <activity
