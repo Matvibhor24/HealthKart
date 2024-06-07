@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MediMate</string>
+    <string name="alreadySignedUpText">Already signed up? <u>Sign In</u></string>
+</resources>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EBF9FF"
+    tools:context=".HomeScreen">
+
+    <TextView
+        android:id="@+id/hii_txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginStart="15dp"
+        android:textSize="20sp"
+        android:padding="10dp"
+        android:fontFamily="@font/kinetica_bold"
+        android:text="Hi, Nishar!"
+        android:textColor="#195A80"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+    <TextView
+        android:id="@+id/howAreTxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:paddingHorizontal="10dp"
+        android:textStyle="bold"
+        android:fontFamily="@font/kinetika_regular"
+        android:text="How Are you Today?"
+        android:textColor="#8F9498"
+        app:layout_constraintStart_toStartOf="@id/hii_txt"
+        app:layout_constraintTop_toBottomOf="@id/hii_txt"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/maincard"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/card_background"
+        android:backgroundTint="#EBF9FF"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="2sp"
+        android:layout_marginHorizontal="15dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/howAreTxt">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/card_background" >
+
+            <TextView
+                android:id="@+id/booktext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Book and \nSchedule an \nAppointment"
+                android:paddingHorizontal="15dp"
+                android:elevation="4sp"
+                android:layout_margin="10dp"
+                android:textSize="20sp"
+                android:lineSpacingMultiplier="1.25"
+                android:fontFamily="@font/kinetika_semibold"
+                android:textColor="#195A80"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:elevation="8sp"
+                android:textColor="@color/white"
+                android:text="Find Doctors"
+                android:fontFamily="@font/kinetika_semibold"
+                android:backgroundTint="#10B6B6"
+                app:layout_constraintEnd_toEndOf="@+id/booktext"
+                app:layout_constraintStart_toStartOf="@id/booktext"
+                app:layout_constraintTop_toBottomOf="@id/booktext"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.cardview.widget.CardView>
+
+
+
+
+    <ImageView
+        android:layout_width="190dp"
+        android:layout_height="202dp"
+        android:backgroundTint="#EBF9FF"
+        android:elevation="4sp"
+        android:src="@drawable/doctor_icon"
+        app:layout_constraintBottom_toBottomOf="@id/maincard"
+        app:layout_constraintEnd_toEndOf="@+id/maincard" />
+
+    <TextView
+        android:id="@+id/drspeciality"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        android:paddingHorizontal="10dp"
+        android:text="Doctor Speciality"
+        android:textSize="20dp"
+        android:textColor="#195A80"
+        android:fontFamily="@font/triviasansmedium"
+        app:layout_constraintTop_toBottomOf="@id/maincard"/>
+
+    <HorizontalScrollView
+        android:id="@+id/drhrzview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/drspeciality">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingHorizontal="20dp">
+
+        <include layout="@layout/option_item1"
+            android:src="@drawable/general_icon"
+            android:text="General" />
+
+    </LinearLayout>
+
+    </HorizontalScrollView>
+
+    <TextView
+        android:id="@+id/recomendationdr"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="30dp"
+        android:paddingHorizontal="10dp"
+        android:text="Recommendation Doctor"
+        android:textSize="20dp"
+        android:textColor="#195A80"
+        android:fontFamily="@font/triviasansmedium"
+        app:layout_constraintTop_toBottomOf="@id/drhrzview"/>
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="15dp"
+        android:layout_marginTop="15dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/recomendationdr">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/drImage"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/doctor_icon"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="20dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toEndOf="@id/drImage">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Dr. Wangy Wigham"
+                    android:padding="10dp"
+                    android:textSize="16dp"
+                    android:fontFamily="@font/kinetica_bold"/>
+            </LinearLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
