@@ -1,0 +1,62 @@
+1. npm init  ->  either using cmd or vscode terminal (windows powershell)
+DESC = > CLAUDE
+
+2. npm install nodemon -g  ->  globally install nodemon
+   npm install nodemon -D  ->  install nodemon as development dependency in our project
+
+  // First you need to change Powershell Script execution policy
+   Get-ExecutionPolicy
+   Set-ExecutionPolicy UnRestricted
+
+3. install dependencies -> 
+    express [DESC] CLAUDE
+    mongoose 
+    jsonwebtoken
+    bcryptjs
+    dotenv
+    morgan
+    colors 
+
+4. Using express
+    const express = require('express');
+    const app = express();
+
+    app.use() //middleware
+    app.get()
+    app.post()
+
+5. connect mongodb
+    create a db.js 
+
+    const connectDB = async()=>{
+        const conn = await mongoose.connect(process.env.MONGO_URL);
+        console.log(`MongoDB connected ${conn.connection.host}`)
+    }
+    module.exports = connectDB;
+
+6. create a separate file for routes(get/post)
+   export it 
+
+   and write  - 
+   app.use(route,require('file'))
+
+    inside that use bcryptjs (using async await)
+
+7. use jsonwebtoken to authorize
+    set up jwt_user as a middleware. It first checks if header is 'Authorize' and token value is present.
+    Then inside post request, create a payload object using user id and sign that for creating a jwt token for that.
+    [jwt.sign(payload,process.env.jwtUserSecret,{
+            expiresIn: 360000
+        }, (err,token)=>{
+            if (err) throw err;
+            res.status(200).json({
+                succes: true,
+                token: token
+            });
+        });]
+
+    whn using the get request, use the middleware along with it.
+    pass the token along with request, if User.finById(req.user.id) is there, res.json (user);
+
+    So, for a user we first generate a token and then using that token we can get the user details. If it fails in the middleware ,
+    it gives 401 error.
