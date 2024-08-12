@@ -31,7 +31,7 @@ router.post('/register',async (req,res)=>{
     const {username,email,password} = req.body;
     let user_exist = await User.findOne({email:email});
     if (user_exist){
-        res.json({
+        return res.json({
             success: false,
             msg: 'User already exists'
         });
@@ -100,7 +100,10 @@ router.post('/login', async (req, res) => {
 
     } catch (error) {
         console.error(error.message);
-        res.status(500).json({ success: false, msg: "Server Error" });
+        res.status(500).json({ 
+            success: false,
+            msg: "Server Error" 
+        });
     }
 });
 
