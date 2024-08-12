@@ -8,7 +8,7 @@ dotenv.config({
     path: './config/config.env'
 })
 const port = process.env.PORT || 3000;
-const host = "localhost";
+const host = "0.0.0.0";
 
 const app = express();
 
