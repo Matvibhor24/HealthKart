@@ -32,18 +32,20 @@ app.use('/api',require('./routes/user'));
 //         msg:'working'
 //     });
 // })
-app.get('/auction',(req,res)=>{
-    // res.statusCode = 200;
-    // res.setHeader('Content-Type','text/json');
-    // res.end('{"name":"vibhor"}');
-    res.status(200).json({"name":"vibhor1"});
-})
-app.get('/',(req,res)=>{
-    // res.statusCode = 200;
-    // res.setHeader('Content-Type','text/json');
-    // res.end('{"name":"vibhor2"}');
-    res.status(200).json({"name":"vibhor3","Title":req.title});
-})
+
+// app.get('/auction',(req,res)=>{
+//     // res.statusCode = 200;
+//     // res.setHeader('Content-Type','text/json');
+//     // res.end('{"name":"vibhor"}');
+//     res.status(200).json({"name":"vibhor1"});
+// })
+
+// app.get('/',(req,res)=>{
+//     // res.statusCode = 200;
+//     // res.setHeader('Content-Type','text/json');
+//     // res.end('{"name":"vibhor2"}');
+//     res.status(200).json({"name":"vibhor3","Title":req.title});
+// })
 
 app.listen(port,host,()=>{
     console.log(`Server started at http://${host}:${port}`);

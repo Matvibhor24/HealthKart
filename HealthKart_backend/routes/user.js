@@ -57,7 +57,7 @@ router.post('/register',async (req,res)=>{
         }, (err,token)=>{
             if (err) throw err;
             res.status(200).json({
-                succes: true,
+                success: true,
                 token: token
             });
         });
@@ -67,6 +67,42 @@ router.post('/register',async (req,res)=>{
         //     user: user
         // });
     }
-})
+});
+router.post('/login', async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        let user = await User.findOne({ email });
+        if (!user) {
+            return res.status(400).json({ success: false, msg: "User not exists. Register to continue!" });
+        }
+
+        const isMatch = await bcryptjs.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).json({ success: false, msg: "Invalid Credentials" });
+        }
+
+        const payload = {
+            user: {
+                id: user.id
+            }
+        };
+
+        jwt.sign(payload, process.env.jwtUserSecret, {
+            expiresIn: 360000
+        }, (err, token) => {
+            if (err) throw err;
+            res.status(200).json({
+                success: true,
+                token: token
+            });
+        });
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ success: false, msg: "Server Error" });
+    }
+});
+
 
 module.exports = router;
