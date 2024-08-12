@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#EBF9FF"
+    tools:context=".BookAppointmentScreen">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:orientation="vertical"
+        android:padding="5dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/alldrtxt">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/imageView3"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:src="@drawable/doctor_profile_pic" />
+    </LinearLayout>
+
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kinetica_bold"
+            android:paddingHorizontal="10dp"
+            android:paddingTop="10dp"
+            android:text="Dr. Wangy Wigham"
+            android:textSize="20dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kinetika_regular"
+            android:padding="10dp"
+            android:text="General | Shalby Hospitals"
+            android:textColor="#8F9498"
+            android:textSize="16dp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kinetika_regular"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:text="⭐ 4.8 Rating"
+                android:textColor="#8F9498"
+                android:textSize="14dp"
+                android:textStyle="bold"
+                android:drawableStart=""/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kinetika_regular"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:drawableStart="@drawable/patient"
+                android:text="200+ Patients"
+                android:textColor="#8F9498"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kinetika_regular"
+                android:padding="10dp"
+                android:paddingHorizontal="10dp"
+                android:drawableStart="@drawable/rupee"
+                android:text="200 Fees"
+                android:textColor="#8F9498"
+                android:textSize="14dp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="#c0c0c0" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Date"
+            android:textSize="18dp"
+            android:textColor="#195A80"
+            android:fontFamily="@font/triviasansmedium"
+            android:padding="8dp"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:backgroundTint="#10B6B6"
+                android:text="23\nMon"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="#10B6B6"
+                android:text="24\nMon"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="#10B6B6"
+                android:text="25\nMon"/>
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.7"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="#10B6B6"
+                android:text="26\nMon"/>
+
+<!--            <Button-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_weight="1"-->
+<!--                android:text="24"/>-->
+<!--                android:background="@drawable/date_button_selected"/>-->
+        </LinearLayout>
+
+        <!-- Available Time -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Available Time"
+            android:textSize="18dp"
+            android:textColor="#195A80"
+            android:fontFamily="@font/triviasansmedium"
+            android:padding="8dp"/>
+
+        <!-- Time Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <!-- Example time buttons (customize as needed) -->
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#10B6B6"
+                android:text="10:00pm"/>
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:backgroundTint="#10B6B6"
+                android:text="11:00pm" />
+
+
+        </LinearLayout>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="State your Problem"
+            android:textSize="18dp"
+            android:textColor="#195A80"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/triviasansmedium"
+            android:padding="8dp"/>
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Type your Problem here..."
+            android:paddingHorizontal="15dp"
+            android:layout_marginHorizontal="2dp"
+            android:id="@+id/edit_text"
+            android:background="@drawable/button_background"
+            android:elevation="4sp"
+            android:minLines="3"
+            android:inputType="textMultiLine" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="#A9D6EB"
+            android:elevation="4sp"
+            android:textSize="16dp"
+            android:fontFamily="@font/kinetika_semibold"
+            android:text="Book Appointment"
+            android:textColor="#195A80" />
+    </LinearLayout>
+
+
+
+    <TextView
+        android:id="@+id/alldrtxt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="30dp"
+        android:drawableStart="@drawable/baseline_arrow_back_ios_new_24"
+        android:fontFamily="@font/kinetica_bold"
+        android:padding="10dp"
+        android:text=""
+        android:textColor="#195A80"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
