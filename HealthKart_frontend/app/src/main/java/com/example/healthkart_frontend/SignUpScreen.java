@@ -72,7 +72,7 @@ public class SignUpScreen extends AppCompatActivity {
     }
 
     private void registerUser(String username, String email, String password) {
-        String url = "http://localhost:2000/api/register"; // Replace <YOUR_LOCAL_IP> with your local IP address
+        String url = "https://healthkart.onrender.com/api/register";
 
         JSONObject jsonParam = new JSONObject();
         try {
@@ -92,6 +92,7 @@ public class SignUpScreen extends AppCompatActivity {
                                 String token = response.getString("token");
                                 Toast.makeText(SignUpScreen.this, "Registration successful! Token: " + token, Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
+                                finish();
                             } else {
                                 Toast.makeText(SignUpScreen.this, "Registration failed: " + response.getString("msg"), Toast.LENGTH_SHORT).show();
                             }

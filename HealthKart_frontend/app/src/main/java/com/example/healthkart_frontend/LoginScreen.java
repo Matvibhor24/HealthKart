@@ -24,7 +24,6 @@ public class LoginScreen extends AppCompatActivity {
 
     private EditText emailEditText, passwordEditText;
     private TextView loginButton;
-    private ProgressBar progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +42,11 @@ public class LoginScreen extends AppCompatActivity {
 
                 if (email.isEmpty()) {
                     emailEditText.setError("Email is required");
-                    emailEditText.requestFocus();
                     return;
                 }
 
                 if (password.isEmpty()) {
                     passwordEditText.setError("Password is required");
-                    passwordEditText.requestFocus();
                     return;
                 }
 
@@ -59,8 +56,8 @@ public class LoginScreen extends AppCompatActivity {
     }
 
     private void loginUser(String email, String password) {
-        progressBar.setVisibility(View.VISIBLE);
-        String url = "http://your-backend-api-url.com/api/login";
+//        progressBar.setVisibility(View.VISIBLE);
+        String url = "https://healthkart.onrender.com/api/login";
 
         JSONObject loginParams = new JSONObject();
         try {
@@ -74,12 +71,12 @@ public class LoginScreen extends AppCompatActivity {
                 (Request.Method.POST, url, loginParams, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        progressBar.setVisibility(View.GONE);
+//                        progressBar.setVisibility(View.GONE);
                         try {
                             boolean success = response.getBoolean("success");
                             if (success) {
                                 String token = response.getString("token");
-                                saveToken(token);
+                                Toast.makeText(LoginScreen.this, token, Toast.LENGTH_SHORT).show();
                                 Intent intent = new Intent(LoginScreen.this, HomeScreen.class);
                                 startActivity(intent);
                                 finish();
@@ -94,16 +91,12 @@ public class LoginScreen extends AppCompatActivity {
 
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        progressBar.setVisibility(View.GONE);
+//                        progressBar.setVisibility(View.GONE);
                         Toast.makeText(LoginScreen.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
 
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(jsonObjectRequest);
-    }
-
-    private void saveToken(String token) {
-        // Implement token saving logic here, such as saving to SharedPreferences
     }
 }
