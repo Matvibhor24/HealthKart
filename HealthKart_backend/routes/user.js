@@ -28,7 +28,7 @@ router.post('/register',async (req,res)=>{
     // res.setHeader('Content-Type','application/json');
     // console.log(req.body);
 
-    const {username,email,password} = req.body;
+    const {username,email,password,role} = req.body;
     let user_exist = await User.findOne({email:email});
     if (user_exist){
         return res.json({
@@ -44,6 +44,7 @@ router.post('/register',async (req,res)=>{
         // user.password = password;
         const salt = await bcryptjs.genSalt(10);
         user.password = await bcryptjs.hash(password, salt);
+        user.role = role;
 
         await user.save();
 
@@ -58,7 +59,8 @@ router.post('/register',async (req,res)=>{
             if (err) throw err;
             res.status(200).json({
                 success: true,
-                token: token
+                token: token,
+                role: user.role
             });
         });
         // res.json({
@@ -94,7 +96,8 @@ router.post('/login', async (req, res) => {
             if (err) throw err;
             res.status(200).json({
                 success: true,
-                token: token
+                token: token,
+                role: user.role
             });
         });
 

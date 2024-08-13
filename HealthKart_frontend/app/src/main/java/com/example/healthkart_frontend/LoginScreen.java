@@ -76,9 +76,16 @@ public class LoginScreen extends AppCompatActivity {
                             boolean success = response.getBoolean("success");
                             if (success) {
                                 String token = response.getString("token");
+                                String role = response.getString("role");
                                 Toast.makeText(LoginScreen.this, token, Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(LoginScreen.this, HomeScreen.class);
-                                startActivity(intent);
+                                 if (role=="Doctor"){
+                                     Intent intent = new Intent(LoginScreen.this, DoctorHomeScreen.class);
+                                     startActivity(intent);
+                                 }
+                                 else {
+                                     Intent intent = new Intent(LoginScreen.this, HomeScreen.class);
+                                     startActivity(intent);
+                                 }
                                 finish();
                             } else {
                                 Toast.makeText(LoginScreen.this, "Login failed", Toast.LENGTH_SHORT).show();

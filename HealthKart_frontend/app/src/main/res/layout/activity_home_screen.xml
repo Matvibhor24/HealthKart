@@ -69,6 +69,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/findDoctorBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="40dp"
                 android:elevation="8sp"
@@ -120,11 +121,12 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/drspeciality">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:paddingHorizontal="20dp">
+        <LinearLayout
+            android:id="@+id/drOptionsLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingHorizontal="20dp">
 
         <include layout="@layout/option_item1"
             android:src="@drawable/general_icon"
@@ -148,6 +150,7 @@
         app:layout_constraintTop_toBottomOf="@id/drhrzview"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/recommendationCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="15dp"

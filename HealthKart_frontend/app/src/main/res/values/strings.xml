@@ -1,4 +1,9 @@
 <resources>
     <string name="app_name">HealthKart_Frontend</string>
     <string name="alreadySignedUpText">Already signed up? <u>Sign In</u></string>
+    <string-array name="roles_array">
+        <item>Doctor</item>
+        <item>Patient</item>
+    </string-array>
 </resources>
+

@@ -4,8 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,6 +27,7 @@ import org.json.JSONObject;
 public class SignUpScreen extends AppCompatActivity {
     EditText username, email, password, confirmPassword;
     TextView register;
+    Spinner roleSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,11 @@ public class SignUpScreen extends AppCompatActivity {
         password = findViewById(R.id.password);
         confirmPassword = findViewById(R.id.confirm_password);
         register = findViewById(R.id.registerBtn);
+        roleSpinner = findViewById(R.id.role_spinner);
+
+        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.roles_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        roleSpinner.setAdapter(adapter);
 
         register.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,6 +52,7 @@ public class SignUpScreen extends AppCompatActivity {
                 String emailText = email.getText().toString().trim();
                 String passwordText = password.getText().toString().trim();
                 String confirmPasswordText = confirmPassword.getText().toString().trim();
+                String selectedRole = roleSpinner.getSelectedItem().toString(); // Get selected role
 
                 if (TextUtils.isEmpty(usernameText)) {
                     username.setError("Username is required");
@@ -66,19 +74,19 @@ public class SignUpScreen extends AppCompatActivity {
                     return;
                 }
 
-                registerUser(usernameText, emailText, passwordText);
+                registerUser(usernameText, emailText, passwordText, selectedRole);
             }
         });
     }
 
-    private void registerUser(String username, String email, String password) {
+    private void registerUser(String username, String email, String password, String role) {
         String url = "https://healthkart.onrender.com/api/register";
-
         JSONObject jsonParam = new JSONObject();
         try {
             jsonParam.put("username", username);
             jsonParam.put("email", email);
             jsonParam.put("password", password);
+            jsonParam.put("role", role); // Add role to the JSON object
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -90,8 +98,16 @@ public class SignUpScreen extends AppCompatActivity {
                         try {
                             if (response.getBoolean("success")) {
                                 String token = response.getString("token");
-                                Toast.makeText(SignUpScreen.this, "Registration successful! Token: " + token, Toast.LENGTH_SHORT).show();
-                                startActivity(new Intent(SignUpScreen.this, HomeScreen.class));
+                                String role = response.getString("role");
+                                Toast.makeText(SignUpScreen.this, token, Toast.LENGTH_SHORT).show();
+                                if (role=="Doctor"){
+                                    Intent intent = new Intent(SignUpScreen.this, DoctorHomeScreen.class);
+                                    startActivity(intent);
+                                }
+                                else {
+                                    Intent intent = new Intent(SignUpScreen.this, HomeScreen.class);
+                                    startActivity(intent);
+                                }
                                 finish();
                             } else {
                                 Toast.makeText(SignUpScreen.this, "Registration failed: " + response.getString("msg"), Toast.LENGTH_SHORT).show();
