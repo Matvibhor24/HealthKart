@@ -20,7 +20,7 @@ router.get('/',user_jwt,async(req,res,next)=>{
         });
         next();
     }
-})
+});
 router.post('/register',async (req,res)=>{
     // res.status(200).json({
     //     msg:"working"

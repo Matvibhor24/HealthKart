@@ -3,6 +3,7 @@ package com.example.healthkart_frontend;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -21,12 +22,13 @@ public class SplashScreen extends AppCompatActivity {
         SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
         String token = sharedPreferences.getString("jwt_token", null);
 
+
         tv = findViewById(R.id.hellotxt);
         tv2 = findViewById(R.id.goToLogIn);
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (token != null) {
+                if (token!=null) {
                     Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
                     startActivity(intent);
                     finish();

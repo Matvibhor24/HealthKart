@@ -1,6 +1,7 @@
 package com.example.healthkart_frontend;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -21,8 +22,12 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignUpScreen extends AppCompatActivity {
     EditText username, email, password, confirmPassword;
@@ -99,8 +104,15 @@ public class SignUpScreen extends AppCompatActivity {
                             if (response.getBoolean("success")) {
                                 String token = response.getString("token");
                                 String role = response.getString("role");
+
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("jwt_token", token);
+                                editor.apply();
+
                                 Toast.makeText(SignUpScreen.this, token, Toast.LENGTH_SHORT).show();
                                 if (role=="Doctor"){
+                                    checkDoctorEntry(token);
                                     Intent intent = new Intent(SignUpScreen.this, DoctorHomeScreen.class);
                                     startActivity(intent);
                                 }
@@ -131,4 +143,50 @@ public class SignUpScreen extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(SignUpScreen.this);
         requestQueue.add(jsonObjectRequest);
     }
+
+    private void checkDoctorEntry(String token) {
+        String url = "https://healthkart.onrender.com/api/doctors/exists";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            boolean exists = response.getBoolean("success");
+                            Intent intent;
+                            if (exists) {
+                                intent = new Intent(SignUpScreen.this, DoctorHomeScreen.class);
+                            } else {
+                                intent = new Intent(SignUpScreen.this, EditDoctorProfileScreen.class);
+                            }
+                            intent.putExtra("TOKEN_KEY", token);
+                            intent.putExtra("IS_EDIT", exists);
+                            if (exists) {
+                                JSONArray doctorArray = response.getJSONArray("doctorInfo");
+                                String doctorId = doctorArray.getJSONObject(0).getString("_id");
+                                intent.putExtra("DOCTOR_ID", doctorId);
+                            }
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(SignUpScreen.this, "Failed to check doctor entry.", Toast.LENGTH_SHORT).show();
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(jsonObjectRequest);
+    }
+
 }

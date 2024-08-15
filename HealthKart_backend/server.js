@@ -26,12 +26,13 @@ app.use(express.json({}));
 //     extended: true
 // }));
 
-app.use('/api',require('./routes/user.js'));
+app.use('/api/auth',require('./routes/user.js'));
 // app.post('/register',(req,res)=>{
 //     res.json({
 //         msg:'working'
 //     });
 // })
+app.use('/api/doctors',require('./routes/doctor.js'));
 
 app.listen(port,host,()=>{
     console.log(`Server started at http://${host}:${port}`);

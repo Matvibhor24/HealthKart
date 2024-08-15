@@ -5,5 +5,14 @@
         <item>Doctor</item>
         <item>Patient</item>
     </string-array>
+    <string-array name="specialization_array">
+        <item>General</item>
+        <item>ENT</item>
+        <item>Dermatologist</item>
+        <item>Urologist</item>
+        <item>Neurologist</item>
+        <item>Gynaecology</item>
+        <item>Cardiologist</item>
+    </string-array>
 </resources>
 

@@ -1,6 +1,9 @@
 package com.example.healthkart_frontend;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -9,12 +12,20 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class AllDoctors extends AppCompatActivity {
-
+    TextView back;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_all_doctors);
+        back = findViewById(R.id.alldrtxt);
+        back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(AllDoctors.this, HomeScreen.class);
+                startActivity(intent);
+            }
+        });
 
     }
 }

@@ -15,6 +15,9 @@
         android:theme="@style/Theme.HealthKart_Frontend"
         tools:targetApi="31">
         <activity
+            android:name=".EditDoctorProfileScreen"
+            android:exported="false" />
+        <activity
             android:name=".DoctorHomeScreen"
             android:exported="false" />
         <activity
