@@ -23,7 +23,7 @@ router.get('/exists',auth,async(req,res,next)=>{
     try {
         let doctor = await Doctor.findOne({userId:req.user.id});
         if (!doctor){
-            return res.status(400).json({
+            return res.status(200).json({
                 success:false,
                 msg: "Doctor Info not entered"
             });

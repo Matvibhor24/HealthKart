@@ -28,28 +28,28 @@ public class SplashScreen extends AppCompatActivity {
         tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (token!=null) {
-                    Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
-                    startActivity(intent);
-                    finish();
-                } else {
+//                if (token!=null) {
+//                    Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
+//                    startActivity(intent);
+//                    finish();
+//                } else {
                     Intent intent = new Intent(SplashScreen.this, SignUpScreen.class);
                     startActivity(intent);
-                }
+//                }
 
             }
         });
         tv2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (token != null) {
-                    Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
-                    startActivity(intent);
-                    finish();
-                } else {
+//                if (token != null) {
+//                    Intent intent = new Intent(SplashScreen.this, HomeScreen.class);
+//                    startActivity(intent);
+//                    finish();
+//                } else {
                     Intent intent = new Intent(SplashScreen.this, LoginScreen.class);
                     startActivity(intent);
-                }
+//                }
 
             }
         });

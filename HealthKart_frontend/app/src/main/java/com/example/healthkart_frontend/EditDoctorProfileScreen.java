@@ -107,7 +107,7 @@ public class EditDoctorProfileScreen extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", token);
                 return headers;
             }
         };
@@ -163,7 +163,7 @@ public class EditDoctorProfileScreen extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", token);
                 return headers;
             }
         };

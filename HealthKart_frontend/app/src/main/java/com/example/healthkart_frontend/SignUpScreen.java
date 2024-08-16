@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
@@ -85,7 +86,7 @@ public class SignUpScreen extends AppCompatActivity {
     }
 
     private void registerUser(String username, String email, String password, String role) {
-        String url = "https://healthkart.onrender.com/api/register";
+        String url = "https://healthkart.onrender.com/api/auth/register";
         JSONObject jsonParam = new JSONObject();
         try {
             jsonParam.put("username", username);
@@ -111,10 +112,8 @@ public class SignUpScreen extends AppCompatActivity {
                                 editor.apply();
 
                                 Toast.makeText(SignUpScreen.this, token, Toast.LENGTH_SHORT).show();
-                                if (role=="Doctor"){
+                                if (role.equals("Doctor")){
                                     checkDoctorEntry(token);
-                                    Intent intent = new Intent(SignUpScreen.this, DoctorHomeScreen.class);
-                                    startActivity(intent);
                                 }
                                 else {
                                     Intent intent = new Intent(SignUpScreen.this, HomeScreen.class);
@@ -174,13 +173,22 @@ public class SignUpScreen extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(SignUpScreen.this, "Failed to check doctor entry.", Toast.LENGTH_SHORT).show();
+                String errorMsg = "Failed to check doctor entry.";
+                if (error.networkResponse != null) {
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    errorMsg += " Status Code: " + statusCode + ". Response Body: " + responseBody;
+                } else {
+                    errorMsg += " Network Response is null.";
+                }
+                Log.e("hii", errorMsg);
+                Toast.makeText(SignUpScreen.this, errorMsg, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization",token);
                 return headers;
             }
         };

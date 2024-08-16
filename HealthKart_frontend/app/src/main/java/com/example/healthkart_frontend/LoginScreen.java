@@ -3,6 +3,7 @@ package com.example.healthkart_frontend;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -61,7 +62,7 @@ public class LoginScreen extends AppCompatActivity {
 
     private void loginUser(String email, String password) {
 //        progressBar.setVisibility(View.VISIBLE);
-        String url = "https://healthkart.onrender.com/api/login";
+        String url = "https://healthkart.onrender.com/api/auth/login";
 
         JSONObject loginParams = new JSONObject();
         try {
@@ -127,7 +128,8 @@ public class LoginScreen extends AppCompatActivity {
                             Intent intent;
                             if (exists) {
                                 intent = new Intent(LoginScreen.this, DoctorHomeScreen.class);
-                            } else {
+                            }
+                            else {
                                 intent = new Intent(LoginScreen.this, EditDoctorProfileScreen.class);
                             }
                             intent.putExtra("TOKEN_KEY", token);
@@ -145,13 +147,22 @@ public class LoginScreen extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(LoginScreen.this, "Failed to check doctor entry.", Toast.LENGTH_SHORT).show();
+                String errorMsg = "Failed to check doctor entry.";
+                if (error.networkResponse != null) {
+                    int statusCode = error.networkResponse.statusCode;
+                    String responseBody = new String(error.networkResponse.data);
+                    errorMsg += " Status Code: " + statusCode + ". Response Body: " + responseBody;
+                } else {
+                    errorMsg += " Network Response is null.";
+                }
+                Log.e("hii", errorMsg);
+                Toast.makeText(LoginScreen.this, errorMsg, Toast.LENGTH_LONG).show();
             }
         }) {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization",token);
                 return headers;
             }
         };
