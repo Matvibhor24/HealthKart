@@ -50,6 +50,7 @@ router.post('/add',auth,async(req,res)=>{
             userId: req.user.id,
             name: req.body.name,
             speciality: req.body.speciality,
+            contactNo: req.body.contactNo,
             address: req.body.address,
             timings:req.body.timings
         });

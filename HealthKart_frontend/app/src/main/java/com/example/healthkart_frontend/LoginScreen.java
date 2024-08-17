@@ -44,102 +44,33 @@ public class LoginScreen extends AppCompatActivity {
             public void onClick(View v) {
                 String email = emailEditText.getText().toString().trim();
                 String password = passwordEditText.getText().toString().trim();
-
-                if (email.isEmpty()) {
-                    emailEditText.setError("Email is required");
-                    return;
-                }
-
-                if (password.isEmpty()) {
-                    passwordEditText.setError("Password is required");
-                    return;
-                }
-
                 loginUser(email, password);
             }
         });
     }
 
     private void loginUser(String email, String password) {
-//        progressBar.setVisibility(View.VISIBLE);
         String url = "https://healthkart.onrender.com/api/auth/login";
+        JSONObject loginDetails = new JSONObject();
 
-        JSONObject loginParams = new JSONObject();
         try {
-            loginParams.put("email", email);
-            loginParams.put("password", password);
+            loginDetails.put("email", email);
+            loginDetails.put("password", password);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest
-                (Request.Method.POST, url, loginParams, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-//                        progressBar.setVisibility(View.GONE);
-                        try {
-                            boolean success = response.getBoolean("success");
-                            if (success) {
-                                String token = response.getString("token");
-                                String role = response.getString("role");
-
-                                SharedPreferences sharedPreferences = getSharedPreferences("MyAppPrefs", MODE_PRIVATE);
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putString("jwt_token", token);
-                                editor.apply();
-
-                                Toast.makeText(LoginScreen.this, token, Toast.LENGTH_SHORT).show();
-                                 if (role.equals("Doctor")){
-                                     checkDoctorEntry(token);
-                                 }
-                                 else {
-                                     Intent intent = new Intent(LoginScreen.this, HomeScreen.class);
-                                     startActivity(intent);
-                                 }
-                                finish();
-                            } else {
-                                Toast.makeText(LoginScreen.this, "Login failed", Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, new Response.ErrorListener() {
-
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-//                        progressBar.setVisibility(View.GONE);
-                        Toast.makeText(LoginScreen.this, "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
-                    }
-                });
-
-        RequestQueue queue = Volley.newRequestQueue(this);
-        queue.add(jsonObjectRequest);
-    }
-    private void checkDoctorEntry(String token) {
-        String url = "https://healthkart.onrender.com/api/doctors/exists";
-
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.POST, url, loginDetails,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         try {
-                            boolean exists = response.getBoolean("success");
-                            Intent intent;
-                            if (exists) {
-                                intent = new Intent(LoginScreen.this, DoctorHomeScreen.class);
+                            if (response.getBoolean("success")) {
+                                String token = response.getString("token");
+                                checkDoctorExists(token);
+                            } else {
+                                Toast.makeText(LoginScreen.this, "Invalid credentials", Toast.LENGTH_SHORT).show();
                             }
-                            else {
-                                intent = new Intent(LoginScreen.this, EditDoctorProfileScreen.class);
-                            }
-                            intent.putExtra("TOKEN_KEY", token);
-                            intent.putExtra("IS_EDIT", exists);
-                            if (exists) {
-                                JSONArray doctorArray = response.getJSONArray("doctorInfo");
-                                String doctorId = doctorArray.getJSONObject(0).getString("_id");
-                                intent.putExtra("DOCTOR_ID", doctorId);
-                            }
-                            startActivity(intent);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -147,16 +78,56 @@ public class LoginScreen extends AppCompatActivity {
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                String errorMsg = "Failed to check doctor entry.";
-                if (error.networkResponse != null) {
-                    int statusCode = error.networkResponse.statusCode;
-                    String responseBody = new String(error.networkResponse.data);
-                    errorMsg += " Status Code: " + statusCode + ". Response Body: " + responseBody;
-                } else {
-                    errorMsg += " Network Response is null.";
-                }
-                Log.e("hii", errorMsg);
-                Toast.makeText(LoginScreen.this, errorMsg, Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginScreen.this, "Login failed", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        queue.add(jsonObjectRequest);
+    }
+
+    private void checkDoctorExists(String token) {
+        String url = "https://healthkart.onrender.com/api/doctors/exists";
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, url, null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        try {
+                            if (response.getBoolean("success")) {
+                                JSONObject doctor = response.getJSONObject("doctorInfo");
+                                String doctorId = doctor.getString("_id");
+
+                                // Store the doctor ID in SharedPreferences
+                                SharedPreferences sharedPreferences = getSharedPreferences("MyPrefs", MODE_PRIVATE);
+                                SharedPreferences.Editor editor = sharedPreferences.edit();
+                                editor.putString("doctorId", doctorId);
+                                editor.putString("token", token);
+                                editor.apply();
+
+                                // Redirect to DoctorHomeScreen
+                                Intent intent = new Intent(LoginScreen.this, DoctorHomeScreen.class);
+                                intent.putExtra("DOCTOR_ID", doctorId);
+                                intent.putExtra("TOKEN_KEY", token);
+                                startActivity(intent);
+                                finish();
+
+                            } else {
+                                // If the doctor profile does not exist, redirect to EditDoctorProfileScreen
+                                Intent intent = new Intent(LoginScreen.this, EditDoctorProfileScreen.class);
+                                intent.putExtra("TOKEN_KEY", token);
+                                intent.putExtra("IS_EDIT", false);
+                                startActivity(intent);
+                                finish();
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(LoginScreen.this, "Error checking doctor profile", Toast.LENGTH_SHORT).show();
             }
         }) {
             @Override

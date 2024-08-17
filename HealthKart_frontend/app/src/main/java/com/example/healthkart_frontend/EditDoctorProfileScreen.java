@@ -2,6 +2,7 @@ package com.example.healthkart_frontend;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -82,14 +83,37 @@ public class EditDoctorProfileScreen extends AppCompatActivity {
                     public void onResponse(JSONObject response) {
                         try {
                             if (response.getBoolean("success")) {
-                                JSONObject doctor = response.getJSONArray("doctorInfo").getJSONObject(0);
-                                doctorId = doctor.getString("_id");
-                                // Populate fields with the existing doctor details
-                                nameEditText.setText(doctor.getString("name"));
-                                contactEditText.setText(doctor.getString("contact_number"));
-                                addressEditText.setText(doctor.getString("address"));
-                                // Populate specialization spinner and available timings
-                                // ...
+                                JSONObject doctor = response.getJSONObject("doctorInfo");
+                                Log.d("DoctorProfile", "Doctor Info: " + doctor.toString());
+
+                                // Populate the UI with the fetched doctor details
+                                nameEditText.setText(doctor.optString("name", ""));
+                                contactEditText.setText(doctor.optString("contact_number", ""));
+                                addressEditText.setText(doctor.optString("address", ""));
+
+                                // Set the specialization in the spinner
+                                String[] specializations = getResources().getStringArray(R.array.specialization_array);
+                                String doctorSpecialization = doctor.optString("speciality", "");
+                                for (int i = 0; i < specializations.length; i++) {
+                                    if (specializations[i].equals(doctorSpecialization)) {
+                                        specializationSpinner.setSelection(i);
+                                        break;
+                                    }
+                                }
+
+                                // Populate available timings checkboxes
+                                JSONArray timingsArray = doctor.optJSONArray("timings");
+                                if (timingsArray != null) {
+                                    for (int i = 0; i < availableTimingsGrid.getChildCount(); i++) {
+                                        CheckBox checkBox = (CheckBox) availableTimingsGrid.getChildAt(i);
+                                        for (int j = 0; j < timingsArray.length(); j++) {
+                                            if (checkBox.getText().toString().equals(timingsArray.optString(j))) {
+                                                checkBox.setChecked(true);
+                                                break;
+                                            }
+                                        }
+                                    }
+                                }
 
                             } else {
                                 Toast.makeText(EditDoctorProfileScreen.this, "No profile found.", Toast.LENGTH_SHORT).show();
@@ -163,7 +187,7 @@ public class EditDoctorProfileScreen extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", token);
+                headers.put("Authorization",token);
                 return headers;
             }
         };
@@ -219,7 +243,7 @@ public class EditDoctorProfileScreen extends AppCompatActivity {
             @Override
             public Map<String, String> getHeaders() {
                 Map<String, String> headers = new HashMap<>();
-                headers.put("Authorization", "Bearer " + token);
+                headers.put("Authorization", token);
                 return headers;
             }
         };

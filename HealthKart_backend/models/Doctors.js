@@ -13,6 +13,10 @@ const doctorSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    contactNo:{
+        type: Number,
+        required: true
+    },
     address: {
         type: String,
         required: true
